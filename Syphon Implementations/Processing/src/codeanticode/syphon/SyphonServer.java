@@ -41,7 +41,7 @@ import jsyphon.*;
  *
  */
 
-public class Syphon {
+public class SyphonServer {
 	
 	// myParent is a reference to the parent sketch
 	PApplet myParent;
@@ -60,7 +60,7 @@ public class Syphon {
 	 * @example Hello
 	 * @param theParent
 	 */
-	public Syphon(PApplet theParent) {
+	public SyphonServer(PApplet theParent) {
 	  server=new JSyphonServer();
 	  server.initWithName("df");
 		myParent = theParent;
