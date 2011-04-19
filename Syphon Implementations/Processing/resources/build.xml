@@ -1,4 +1,4 @@
-<project name="Syphon" default="clean" basedir="../">
+<project name="SyphonProcessing" default="clean" basedir="../">
 
     
 <!--	

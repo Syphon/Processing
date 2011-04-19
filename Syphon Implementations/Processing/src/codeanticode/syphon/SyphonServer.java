@@ -30,42 +30,30 @@ import processing.opengl2.*;
 import jsyphon.*;
 
 /**
- * This is a template class and can be used to start a new processing library or tool.
- * Make sure you rename this class as well as the name of the example package 'template' 
- * to your own lobrary or tool naming convention.
- * 
- * @example Hello 
- * 
- * (the tag @example followed by the name of an example included in folder 'examples' will
- * automatically include the example in the javadoc.)
+ * Syphon server class. It broadcasts the textures encapsulated in 
+ * PImage objects when the OPENGL2 renderer is used.
  *
  */
 
 public class SyphonServer {
-	
-	// myParent is a reference to the parent sketch
-	PApplet myParent;
+	PApplet parent;
 	PGraphicsOpenGL2 ogl2;
-
-	int myVariable = 0;
 	private JSyphonServer server;
 	
 	public final static String VERSION = "##version##";
 	
-
 	/**
-	 * a Constructor, usually called in the setup() method in your sketch to
-	 * initialize and start the library.
+	 * Default constructor.
 	 * 
-	 * @example Hello
-	 * @param theParent
+	 * @param parent
 	 */
-	public SyphonServer(PApplet theParent) {
-	  server=new JSyphonServer();
-	  server.initWithName("df");
-		myParent = theParent;
-		ogl2 = (PGraphicsOpenGL2)myParent.g;		
-		//welcome();
+	public SyphonServer(PApplet parent) {
+	  this.parent = parent;
+	  ogl2 = (PGraphicsOpenGL2)parent.g;
+	  
+	  server = new JSyphonServer();
+	  server.initWithName("Processing Syphon");
+	  welcome();
 	}
 	
   public void sendImage(PImage img) {
@@ -76,11 +64,7 @@ public class SyphonServer {
 	private void welcome() {
 		System.out.println("##name## ##version## by ##author##");
 	}
-	
-	
-	public String sayHello() {
-		return "hello library.";
-	}
+		
 	/**
 	 * return the version of the library.
 	 * 
@@ -88,39 +72,6 @@ public class SyphonServer {
 	 */
 	public static String version() {
 		return VERSION;
-	}
-
-	/**
-	 * 
-	 * @param theA
-	 *          the width of test
-	 * @param theB
-	 *          the height of test
-	 */
-	public void setVariable(int theA, int theB) {
-		myVariable = theA + theB;
-	}
-
-	protected PImage getTexture(PImage img) {
-    //PTexture tex = (PTexture)img.getCache(ogl2);
-    /*
-    if (tex == null) {
-      tex = addTexture(img);
-    } else if (img.isModified()) {
-      updateTexture(img, tex);
-    }
-    */
-    //return tex;
-	  
-	  return null;
-  }	
-	
-	/**
-	 * 
-	 * @return int
-	 */
-	public int getVariable() {
-		return myVariable;
 	}
 }
 
