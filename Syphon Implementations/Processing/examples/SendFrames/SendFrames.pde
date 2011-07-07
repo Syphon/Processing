@@ -1,12 +1,11 @@
-import processing.opengl2.*;
 import codeanticode.syphon.*;
 
-PGraphicsOpenGL2 canvas;
+PGraphics canvas;
 SyphonServer syphon;
 
 void setup() {
-  size(400,400, OPENGL2);
-  canvas = (PGraphicsOpenGL2)createGraphics(400, 400, OPENGL2);  
+  size(400,400, P3D);
+  canvas = createGraphics(400, 400, P3D);  
   syphon = new SyphonServer(this);
 }
 

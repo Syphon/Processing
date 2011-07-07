@@ -28,7 +28,7 @@ package codeanticode.syphon;
 import java.util.Dictionary;
 
 import processing.core.*;
-import processing.opengl2.*;
+import processing.opengl.*;
 import jsyphon.*;
 
 /**
@@ -39,7 +39,7 @@ import jsyphon.*;
 
 public class SyphonClient {
   PApplet parent;
-  PGraphicsOpenGL2 ogl2;
+  PGraphicsOpenGL pgl;
   private JSyphonClient client;
   
   public final static String VERSION = "##version##";
@@ -51,7 +51,7 @@ public class SyphonClient {
    */
   public SyphonClient(PApplet parent) {
     this.parent = parent;
-    ogl2 = (PGraphicsOpenGL2)parent.g;
+    pgl = (PGraphicsOpenGL)parent.g;
     client = new JSyphonClient();
     //client.initWithName("Processing Syphon");
     welcome();

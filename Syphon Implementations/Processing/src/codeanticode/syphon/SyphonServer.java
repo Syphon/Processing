@@ -26,7 +26,7 @@
 package codeanticode.syphon;
 
 import processing.core.*;
-import processing.opengl2.*;
+import processing.opengl.*;
 import jsyphon.*;
 
 /**
@@ -37,7 +37,7 @@ import jsyphon.*;
 
 public class SyphonServer {
 	PApplet parent;
-	PGraphicsOpenGL2 ogl2;
+	PGraphicsOpenGL pgl;
 	private JSyphonServer server;
 	
 	public final static String VERSION = "##version##";
@@ -49,7 +49,7 @@ public class SyphonServer {
 	 */
 	public SyphonServer(PApplet parent) {
 	  this.parent = parent;
-	  ogl2 = (PGraphicsOpenGL2)parent.g;
+	  pgl = (PGraphicsOpenGL)parent.g;
 	  
 	  server = new JSyphonServer();
 	  server.initWithName("Processing Syphon");
@@ -57,7 +57,7 @@ public class SyphonServer {
 	}
 	
   public void sendImage(PImage img) {
-    PTexture tex = ogl2.getTexture(img);
+    PTexture tex = pgl.getTexture(img);
     server.publishFrameTexture(tex.glID,tex.glTarget, 0, 0, tex.glWidth, tex.glHeight, tex.glWidth, tex.glHeight, false);
   }	
 	
