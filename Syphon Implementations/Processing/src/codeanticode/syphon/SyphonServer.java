@@ -31,7 +31,7 @@ import jsyphon.*;
 
 /**
  * Syphon server class. It broadcasts the textures encapsulated in 
- * PImage objects when the OPENGL2 renderer is used.
+ * PImage objects when the P3D (OPENGL) renderer is used.
  *
  */
 
