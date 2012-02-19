@@ -86,6 +86,9 @@ public class SyphonClient {
     pgl = (PGraphicsOpenGL)parent.g;
     client = new JSyphonClient();
     client.init();
+    client.setApplicationName("Simple Server");
+    
+    
     //client.initWithName("Processing Syphon");
     
     // ??
@@ -149,8 +152,15 @@ public class SyphonClient {
 
     public void run() {
       try {
-        PApplet.println("FrameReceiver thread running");
-        Thread.sleep(100);
+        PApplet.println("FrameReceiver thread running...");
+        while (true) {
+          
+          if (caller.client.hasNewFrame()) {
+            PApplet.println("syphon client has frame");
+          }
+        
+          Thread.sleep(100);
+        }
       } catch (InterruptedException e) {
         e.printStackTrace();
       }      

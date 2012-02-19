@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jsyphon.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/processing-core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/processing-opengl"/>
+	<classpathentry kind="lib" path="/Users/andres/Coding/Processing/libs/2.0a4/core.jar"/>
+	<classpathentry kind="lib" path="/Users/andres/Coding/Processing/libs/2.0a4/opengl.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
