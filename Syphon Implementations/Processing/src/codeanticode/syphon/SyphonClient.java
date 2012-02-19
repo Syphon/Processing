@@ -53,8 +53,6 @@
 
 package codeanticode.syphon;
 
-// http://cocoadevcentral.com/d/learn_objectivec/
-// http://www.otierney.net/objective-c.html
 // http://syphon.v002.info/FrameworkDocumentation/
 // http://forums.v002.info/topic.php?id=41&page=2&replies=38
 
@@ -74,20 +72,17 @@ public class SyphonClient {
   PGraphicsOpenGL pgl;
   private JSyphonClient client;
   
-  public final static String VERSION = "##version##";
-  
-  /**
-   * Default constructor.
-   * 
-   * @param parent
-   */
-  public SyphonClient(PApplet parent) {
+  public SyphonClient(PApplet parent, String serverName) {
     this.parent = parent;
     pgl = (PGraphicsOpenGL)parent.g;
     client = new JSyphonClient();
-    client.init();
-    client.setApplicationName("Simple Server");
     
+    Syphon.init();
+    
+    client.init();
+    client.setApplicationName(serverName);    
+    
+    (new FrameReceiverThread(this)).start();
     
     //client.initWithName("Processing Syphon");
     
@@ -106,21 +101,8 @@ public class SyphonClient {
     } catch (Exception e) {
       // no such method, or an error.. which is fine, just ignore
     }
-    */
-    
-    (new FrameReceiverThread(this)).start();
-    
-    welcome();
+    */    
   }
-  
-  /*
-  public void sendImage(PImage img) {
-    PTexture tex = ogl2.getTexture(img);
-    server.publishFrameTexture(tex.glID,tex.glTarget, 0, 0, tex.glWidth, tex.glHeight, tex.glWidth, tex.glHeight, false);
-  } 
-  
-
-  */
 
   public Dictionary<String, String> description() {
     return client.serverDescription();  
@@ -130,17 +112,8 @@ public class SyphonClient {
     return client.hasNewFrame();
   }
   
-  private void welcome() {
-    System.out.println("##name## ##version## by ##author##");
-  }  
-  
-  /**
-   * return the version of the library.
-   * 
-   * @return String
-   */
-  public static String version() {
-    return VERSION;
+  public void stop() {
+    client.stop();
   }
   
   protected class FrameReceiverThread extends Thread {
@@ -152,22 +125,18 @@ public class SyphonClient {
 
     public void run() {
       try {
-        PApplet.println("FrameReceiver thread running...");
+        //PApplet.println("FrameReceiver thread running...");
         while (true) {
           
           if (caller.client.hasNewFrame()) {
-            PApplet.println("syphon client has frame");
+            PApplet.println("syphon client has frame: " + caller.client.newFrameDataForContext());            
           }
         
-          Thread.sleep(100);
+          Thread.sleep(5);
         }
       } catch (InterruptedException e) {
         e.printStackTrace();
       }      
-      
-      
-      //PImage img = loadImage("Koala.jpg");
-      //caller.hasLoaded(img);
     }
   }
   

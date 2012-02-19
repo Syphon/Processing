@@ -34,44 +34,39 @@ import jsyphon.*;
  * PImage objects when the P3D (OPENGL) renderer is used.
  *
  */
-
 public class SyphonServer {
 	PApplet parent;
 	PGraphicsOpenGL pgl;
 	private JSyphonServer server;
 	
-	public final static String VERSION = "##version##";
+  public SyphonServer(PApplet parent, String serverName) {
+    this.parent = parent;
+    pgl = (PGraphicsOpenGL)parent.g;
+    
+    Syphon.init();
+    
+    server = new JSyphonServer();
+    server.initWithName(serverName);
+  }	
 	
 	/**
-	 * Default constructor.
+	 * Constructor that sets server with default name.
 	 * 
 	 * @param parent
 	 */
 	public SyphonServer(PApplet parent) {
-	  this.parent = parent;
-	  pgl = (PGraphicsOpenGL)parent.g;
-	  
-	  server = new JSyphonServer();
-	  server.initWithName("Processing Syphon");
-	  welcome();
+	  this(parent, "Processing Syphon");
 	}
 	
   public void sendImage(PImage img) {
     PTexture tex = pgl.getTexture(img);
-    server.publishFrameTexture(tex.glID,tex.glTarget, 0, 0, tex.glWidth, tex.glHeight, tex.glWidth, tex.glHeight, false);
+    if (tex != null) {
+      server.publishFrameTexture(tex.glID,tex.glTarget, 
+                                 0, 0, tex.glWidth, tex.glHeight, 
+                                 tex.glWidth, tex.glHeight, false);
+    } else {
+      PGraphics.showWarning("Texture is null");
+    }
   }	
-	
-	private void welcome() {
-		System.out.println("##name## ##version## by ##author##");
-	}
-		
-	/**
-	 * return the version of the library.
-	 * 
-	 * @return String
-	 */
-	public static String version() {
-		return VERSION;
-	}
 }
 
