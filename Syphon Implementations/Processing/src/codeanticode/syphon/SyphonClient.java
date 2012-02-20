@@ -127,11 +127,9 @@ public class SyphonClient {
       try {
         //PApplet.println("FrameReceiver thread running...");
         while (true) {
-          
           if (caller.client.hasNewFrame()) {
             PApplet.println("syphon client has frame: " + caller.client.newFrameDataForContext());            
           }
-        
           Thread.sleep(5);
         }
       } catch (InterruptedException e) {
