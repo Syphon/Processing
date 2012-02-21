@@ -57,6 +57,10 @@ package codeanticode.syphon;
 // http://forums.v002.info/topic.php?id=41&page=2&replies=38
 
 import java.util.Dictionary;
+
+import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
+
 import processing.core.*;
 import processing.opengl.*;
 import jsyphon.*;
@@ -91,15 +95,42 @@ public class SyphonClient {
     return client.hasNewFrame();
   }
   
-  public void getImage(PImage dest) {
+  public PGraphics getGraphics(PGraphics dest) {
     JSyphonImage img = client.newFrameImageForContext();
     
     int texId = img.textureName();
     int texWidth = img.textureWidth();
     int texHeight = img.textureHeight();
     
-    PApplet.println(texId + " " + texWidth + " " + texHeight);
+    if (dest == null || dest.width != texWidth || dest.height != texHeight) {            
+      dest = parent.createGraphics(texWidth, texHeight, PConstants.P3D);
+    }
     
+    PGraphicsOpenGL destgl = (PGraphicsOpenGL)dest;
+    destgl.beginDraw();
+    GL gl = destgl.beginGL();
+    GL2 gl2 = gl.getGL2();
+      
+    gl.glEnable(GL2.GL_TEXTURE_RECTANGLE_ARB);
+    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, texId);
+    gl2.glBegin(GL2.GL_QUADS);
+    // Texture coordinates are inverted along Y.
+    gl2.glTexCoord2f(0, texHeight);
+    gl2.glVertex2f(0, 0);
+    gl2.glTexCoord2f(texWidth, texHeight);
+    gl2.glVertex2f(texWidth, 0);      
+    gl2.glTexCoord2f(texWidth, 0);
+    gl2.glVertex2f(texWidth, texHeight);      
+    gl2.glTexCoord2f(0, 0);
+    gl2.glVertex2f(0, texHeight);            
+    gl2.glEnd();
+    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, 0);
+    gl.glDisable(GL2.GL_TEXTURE_RECTANGLE_ARB);
+      
+    destgl.endGL();
+    destgl.endDraw();
+        
+    return dest;      
   }
   
   public void stop() {

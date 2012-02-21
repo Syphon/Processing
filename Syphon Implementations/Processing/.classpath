@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="lib/jsyphon.jar"/>
 	<classpathentry kind="lib" path="/Users/andres/Coding/Processing/libs/2.0a4/core.jar"/>
 	<classpathentry kind="lib" path="/Users/andres/Coding/Processing/libs/2.0a4/opengl.jar"/>
+	<classpathentry kind="lib" path="/Users/andres/Coding/Processing/libs/2.0a4/jogl.all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
