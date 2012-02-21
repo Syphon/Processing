@@ -1,5 +1,8 @@
 /**
- * you can put a one sentence description of your library here.
+ * The Processing-Syphon library allows to create Syphon clients
+ * and servers in a Processing sketch to share frames with other
+ * applications. It only works on MacOSX and requires the P3D
+ * renderer.
  *
  * ##copyright##
  *
@@ -31,14 +34,20 @@ import jsyphon.*;
 
 /**
  * Syphon server class. It broadcasts the textures encapsulated in 
- * PImage objects when the P3D (OPENGL) renderer is used.
+ * PImage objects.
  *
  */
 public class SyphonServer {
-	PApplet parent;
-	PGraphicsOpenGL pgl;
-	private JSyphonServer server;
+	protected PApplet parent;
+	protected PGraphicsOpenGL pgl;
+	protected JSyphonServer server;
 	
+  /**
+   * Constructor that sets server with specified name.
+   * 
+   * @param parent
+   * @param serverName
+   */	
   public SyphonServer(PApplet parent, String serverName) {
     this.parent = parent;
     pgl = (PGraphicsOpenGL)parent.g;
@@ -47,26 +56,40 @@ public class SyphonServer {
     
     server = new JSyphonServer();
     server.initWithName(serverName);
+  }
+	
+  /**
+   * Returns true if this server is bound to any
+   * client.
+   * 
+   * @return boolean 
+   */    
+  public boolean hasClients() {
+    return server.hasClients();
   }	
 	
-	/**
-	 * Constructor that sets server with default name.
-	 * 
-	 * @param parent
-	 */
-	public SyphonServer(PApplet parent) {
-	  this(parent, "Processing Syphon");
-	}
-	
+  /**
+   * Sends the source image to the bound client.
+   * 
+   * @param source
+   */ 	
   public void sendImage(PImage source) {
     PTexture tex = pgl.getTexture(source);
     if (tex != null) {
-      server.publishFrameTexture(tex.glID,tex.glTarget, 
+      server.publishFrameTexture(tex.glID, tex.glTarget, 
                                  0, 0, tex.glWidth, tex.glHeight, 
                                  tex.glWidth, tex.glHeight, false);
     } else {
       PGraphics.showWarning("Texture is null");
     }
   }	
+  
+  /**
+   * Stops the server.
+   * 
+   */  
+  public void stop() {
+    server.stop();
+  }  
 }
 

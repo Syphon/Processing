@@ -1,5 +1,8 @@
 /**
- * you can put a one sentence description of your library here.
+ * The Processing-Syphon library allows to create Syphon clients
+ * and servers in a Processing sketch to share frames with other
+ * applications. It only works on MacOSX and requires the P3D
+ * renderer.
  *
  * ##copyright##
  *
@@ -53,9 +56,7 @@
 
 package codeanticode.syphon;
 
-// http://syphon.v002.info/FrameworkDocumentation/
-// http://forums.v002.info/topic.php?id=41&page=2&replies=38
-
+import java.nio.IntBuffer;
 import java.util.Dictionary;
 
 import javax.media.opengl.GL;
@@ -66,16 +67,23 @@ import processing.opengl.*;
 import jsyphon.*;
 
 /**
- * Syphon server class. It broadcasts the textures encapsulated in 
- * PImage objects when the OPENGL renderer is used.
+ * Syphon client class. It receives textures from a Syphon
+ * server.
  *
  */
-
 public class SyphonClient {
-  PApplet parent;
-  PGraphicsOpenGL pgl;
-  private JSyphonClient client;
+  protected PApplet parent;
+  protected PGraphicsOpenGL pgl;
+  protected JSyphonClient client;
+  protected IntBuffer getBuffer;
   
+  /**
+   * Constructor that binds this client to the
+   * specified named server.
+   * 
+   * @param parent
+   * @param serverName
+   */  
   public SyphonClient(PApplet parent, String serverName) {
     this.parent = parent;
     pgl = (PGraphicsOpenGL)parent.g;
@@ -87,14 +95,31 @@ public class SyphonClient {
     client.setApplicationName(serverName);    
   }
 
+  /**
+   * Returns a description of the server.
+   * 
+   * @return Dictionary
+   */   
   public Dictionary<String, String> description() {
     return client.serverDescription();  
   }
-  
+
+  /**
+   * Returns true if a new frame is available.
+   * 
+   * @return boolean 
+   */   
   public boolean available() {
     return client.hasNewFrame();
   }
-  
+
+  /**
+   * Copies the new frame to a PGraphics object.
+   * It initializes dest if it is null or has the 
+   * wrong size. It uses FBOs for fast copy.
+   * 
+   * @param dest
+   */     
   public PGraphics getGraphics(PGraphics dest) {
     JSyphonImage img = client.newFrameImageForContext();
     
@@ -133,6 +158,56 @@ public class SyphonClient {
     return dest;      
   }
   
+  /**
+   * Copies the new frame to a PImage object.
+   * It initializes dest if it is null or has the 
+   * wrong size. It is relatively slow because
+   * it copies the content of the texture frame
+   * to the pixels array of the image.
+   * 
+   * @param dest
+   */    
+  public PImage getImage(PImage dest) {
+    JSyphonImage img = client.newFrameImageForContext();
+    
+    int texId = img.textureName();
+    int texWidth = img.textureWidth();
+    int texHeight = img.textureHeight();
+    
+    if (dest == null || dest.width != texWidth || dest.height != texHeight) {            
+      dest = parent.createImage(texWidth, texHeight, PConstants.ARGB);
+    }
+
+    if (getBuffer == null || getBuffer.capacity() != texWidth * texHeight) {
+      getBuffer = IntBuffer.allocate(texWidth * texHeight);
+    }
+    getBuffer.rewind();
+    
+    GL gl = pgl.gl;
+    GL2 gl2 = gl.getGL2();    
+    
+    gl.glEnable(GL2.GL_TEXTURE_RECTANGLE_ARB);
+    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, texId);    
+    gl2.glGetTexImage(GL2.GL_TEXTURE_RECTANGLE_ARB, 0, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, getBuffer);
+    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, 0);
+    gl.glDisable(GL2.GL_TEXTURE_RECTANGLE_ARB);
+    
+    dest.loadPixels();
+    getBuffer.rewind();
+    getBuffer.get(dest.pixels);
+    
+    // Converts pixels stored in OpenGL format to Processing's ARGB
+    // plus flipping the image along Y.
+    PGraphicsOpenGL.nativeToJavaARGB(dest);
+    dest.updatePixels();
+    
+    return dest;
+  }
+  
+  /**
+   * Stops the client.
+   * 
+   */    
   public void stop() {
     client.stop();
   }

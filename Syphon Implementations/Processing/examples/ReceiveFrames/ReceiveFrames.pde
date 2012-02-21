@@ -4,7 +4,7 @@ PGraphics canvas;
 SyphonClient client;
 
 public void setup() {
-  size(400, 400, P3D);
+  size(480, 340, P3D);
   
   // Create syhpon client to receive frames 
   // from running server with given name: 

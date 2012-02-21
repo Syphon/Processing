@@ -8,11 +8,7 @@ void setup() {
   canvas = createGraphics(400, 400, P3D);
   
   // Create syhpon server to send frames out.
-  // It is named "Processing Syphon" by default
-  // but another name can be set by passing it
-  // an additional argument to the constructor:
-  //server = new SyphonServer(this, "Processing frame out");
-  server = new SyphonServer(this);
+  server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
