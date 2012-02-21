@@ -1,7 +1,7 @@
 import codeanticode.syphon.*;
 
 PGraphics canvas;
-SyphonServer syphon;
+SyphonServer server;
 
 void setup() {
   size(400,400, P3D);
@@ -11,8 +11,8 @@ void setup() {
   // It is named "Processing Syphon" by default
   // but another name can be set by passing it
   // an additional argument to the constructor:
-  //syphon = new SyphonServer(this, "Processing frame out");
-  syphon = new SyphonServer(this);
+  //server = new SyphonServer(this, "Processing frame out");
+  server = new SyphonServer(this);
 }
 
 void draw() {
@@ -25,5 +25,5 @@ void draw() {
   canvas.box(150);
   canvas.endDraw();
   image(canvas, 0, 0);
-  syphon.sendImage(canvas);
+  server.sendImage(canvas);
 }

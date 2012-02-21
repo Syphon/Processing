@@ -58,8 +58,8 @@ public class SyphonServer {
 	  this(parent, "Processing Syphon");
 	}
 	
-  public void sendImage(PImage img) {
-    PTexture tex = pgl.getTexture(img);
+  public void sendImage(PImage source) {
+    PTexture tex = pgl.getTexture(source);
     if (tex != null) {
       server.publishFrameTexture(tex.glID,tex.glTarget, 
                                  0, 0, tex.glWidth, tex.glHeight, 

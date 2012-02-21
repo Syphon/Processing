@@ -81,27 +81,6 @@ public class SyphonClient {
     
     client.init();
     client.setApplicationName(serverName);    
-    
-    (new FrameReceiverThread(this)).start();
-    
-    //client.initWithName("Processing Syphon");
-    
-    // ??
-    // event based to pass what to the sketch... an image?
-    // or, initialize client object with image which will receive
-    // the frames into its PTexture...
-    // or get opengl texture handle from syphon
-    // ??
-    /*
-    eventHandler = ;
-
-    try {
-      syphonEventMethod = parent.getClass().getMethod("syphonEvent",
-          new Class[] { GSMovie.class });
-    } catch (Exception e) {
-      // no such method, or an error.. which is fine, just ignore
-    }
-    */    
   }
 
   public Dictionary<String, String> description() {
@@ -112,31 +91,19 @@ public class SyphonClient {
     return client.hasNewFrame();
   }
   
+  public void getImage(PImage dest) {
+    JSyphonImage img = client.newFrameImageForContext();
+    
+    int texId = img.textureName();
+    int texWidth = img.textureWidth();
+    int texHeight = img.textureHeight();
+    
+    PApplet.println(texId + " " + texWidth + " " + texHeight);
+    
+  }
+  
   public void stop() {
     client.stop();
   }
-  
-  protected class FrameReceiverThread extends Thread {
-    protected SyphonClient caller;
-
-    public FrameReceiverThread(SyphonClient caller) {
-      this.caller = caller;
-    }
-
-    public void run() {
-      try {
-        //PApplet.println("FrameReceiver thread running...");
-        while (true) {
-          if (caller.client.hasNewFrame()) {
-            PApplet.println("syphon client has frame: " + caller.client.newFrameDataForContext());            
-          }
-          Thread.sleep(5);
-        }
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }      
-    }
-  }
-  
 }
 

@@ -1,24 +1,27 @@
 import codeanticode.syphon.*;
 
 PGraphics canvas;
-SyphonClient syphon;
+SyphonClient client;
 
 public void setup() {
   size(400, 400, P3D);  
   
   // Create syhpon client to receive frames 
   // from running server with given name: 
-  syphon = new SyphonClient(this, "Simple Server");
+  client = new SyphonClient(this, "Simple Server");
 }
 
 public void draw() {
   background(0);
+  if (client.available()) {
+    client.getImage(null);    
+  }  
 }
 
 void keyPressed() {
   if (key == ' ') {
-    syphon.stop();  
+    client.stop();  
   } else if (key == 'd') {
-    println(syphon.description());
+    println(client.description());
   }
 }
