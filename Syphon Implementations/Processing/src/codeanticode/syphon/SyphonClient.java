@@ -93,6 +93,7 @@ public class SyphonClient {
     
     client.init();
     client.setApplicationName(serverName);    
+    //PApplet.println(client.isValid());
   }
 
   /**
