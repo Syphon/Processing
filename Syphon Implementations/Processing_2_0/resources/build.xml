@@ -137,7 +137,6 @@ ${line}
 		<copy file="${build.location}/core.jar" tofile="${classpath.local.location}/core.jar" />
 		<copy file="${build.location}/modes/java/libraries/opengl/library/opengl.jar" tofile="${classpath.local.location}/opengl.jar" />
 		<copy file="${build.location}/modes/java/libraries/opengl/library/jogl.all.jar" tofile="${classpath.local.location}/jogl.all.jar" />
-		<copy file="${build.location}/modes/java/libraries/opengl/library/nativewindow.all.jar" tofile="${classpath.local.location}/nativewindow.all.jar" />
 		<copy file="${build.location}/modes/java/libraries/opengl/library/gluegen-rt.jar" tofile="${classpath.local.location}/gluegen-rt.jar" />		
 	</target>
 	

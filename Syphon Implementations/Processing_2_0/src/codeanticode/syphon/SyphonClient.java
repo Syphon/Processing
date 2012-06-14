@@ -73,7 +73,7 @@ import jsyphon.*;
  */
 public class SyphonClient {
   protected PApplet parent;
-  protected PGraphicsOpenGL pgl;
+  protected PGraphicsOpenGL pg;
   protected JSyphonClient client;
   protected IntBuffer getBuffer;
   
@@ -86,7 +86,7 @@ public class SyphonClient {
    */  
   public SyphonClient(PApplet parent, String serverName) {
     this.parent = parent;
-    pgl = (PGraphicsOpenGL)parent.g;
+    pg = (PGraphicsOpenGL)parent.g;
     client = new JSyphonClient();
     
     Syphon.init();
@@ -134,7 +134,7 @@ public class SyphonClient {
     
     PGraphicsOpenGL destgl = (PGraphicsOpenGL)dest;
     destgl.beginDraw();
-    GL gl = destgl.beginGL();
+    GL gl = destgl.beginPGL().gl;
     GL2 gl2 = gl.getGL2();
       
     gl.glEnable(GL2.GL_TEXTURE_RECTANGLE_ARB);
@@ -153,7 +153,7 @@ public class SyphonClient {
     gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, 0);
     gl.glDisable(GL2.GL_TEXTURE_RECTANGLE_ARB);
       
-    destgl.endGL();
+    destgl.endPGL();
     destgl.endDraw();
         
     return dest;      
@@ -184,7 +184,7 @@ public class SyphonClient {
     }
     getBuffer.rewind();
     
-    GL gl = pgl.gl;
+    GL gl = pg.pgl.gl;
     GL2 gl2 = gl.getGL2();    
     
     gl.glEnable(GL2.GL_TEXTURE_RECTANGLE_ARB);

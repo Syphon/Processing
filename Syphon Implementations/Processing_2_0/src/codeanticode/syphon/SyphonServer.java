@@ -74,7 +74,7 @@ public class SyphonServer {
    * @param source
    */ 	
   public void sendImage(PImage source) {
-    PTexture tex = pgl.getTexture(source);
+    Texture tex = pgl.getTexture(source);
     if (tex != null) {
       server.publishFrameTexture(tex.glID, tex.glTarget, 
                                  0, 0, tex.glWidth, tex.glHeight, 
