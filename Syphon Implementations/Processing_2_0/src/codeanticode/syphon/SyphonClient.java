@@ -132,29 +132,15 @@ public class SyphonClient {
       dest = parent.createGraphics(texWidth, texHeight, PConstants.P3D);
     }
     
-    PGraphicsOpenGL destgl = (PGraphicsOpenGL)dest;
-    destgl.beginDraw();
-    GL gl = destgl.beginPGL().gl;
-    GL2 gl2 = gl.getGL2();
-      
-    gl.glEnable(GL2.GL_TEXTURE_RECTANGLE_ARB);
-    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, texId);
-    gl2.glBegin(GL2.GL_QUADS);
-    // Texture coordinates are inverted along Y.
-    gl2.glTexCoord2f(0, texHeight);
-    gl2.glVertex2f(0, 0);
-    gl2.glTexCoord2f(texWidth, texHeight);
-    gl2.glVertex2f(texWidth, 0);      
-    gl2.glTexCoord2f(texWidth, 0);
-    gl2.glVertex2f(texWidth, texHeight);      
-    gl2.glTexCoord2f(0, 0);
-    gl2.glVertex2f(0, texHeight);            
-    gl2.glEnd();
-    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, 0);
-    gl.glDisable(GL2.GL_TEXTURE_RECTANGLE_ARB);
-      
-    destgl.endPGL();
-    destgl.endDraw();
+    PGraphicsOpenGL destpg = (PGraphicsOpenGL)dest;
+    destpg.beginDraw();
+    PGL pgl = destpg.beginPGL();
+    
+    pgl.drawTexture(PGL.GL_TEXTURE_RECTANGLE, texId, 
+                    texWidth, texHeight, 0, 0, texWidth, texHeight);
+
+    destpg.endPGL();
+    destpg.endDraw();
         
     return dest;      
   }
