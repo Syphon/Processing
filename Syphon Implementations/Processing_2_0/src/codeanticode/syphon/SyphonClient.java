@@ -59,9 +59,6 @@ package codeanticode.syphon;
 import java.nio.IntBuffer;
 import java.util.Dictionary;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-
 import processing.core.*;
 import processing.opengl.*;
 import jsyphon.*;
@@ -76,6 +73,7 @@ public class SyphonClient {
   protected PGraphicsOpenGL pg;
   protected JSyphonClient client;
   protected IntBuffer getBuffer;
+  public PGraphics tempDest;
   
   /**
    * Constructor that binds this client to the
@@ -87,10 +85,10 @@ public class SyphonClient {
   public SyphonClient(PApplet parent, String serverName) {
     this.parent = parent;
     pg = (PGraphicsOpenGL)parent.g;
-    client = new JSyphonClient();
     
     Syphon.init();
     
+    client = new JSyphonClient();
     client.init();
     client.setApplicationName(serverName);    
     //PApplet.println(client.isValid());
@@ -129,7 +127,7 @@ public class SyphonClient {
     int texHeight = img.textureHeight();
     
     if (dest == null || dest.width != texWidth || dest.height != texHeight) {            
-      dest = parent.createGraphics(texWidth, texHeight, PConstants.P3D);
+      dest = parent.createGraphics(texWidth, texHeight, PConstants.P2D);
     }
     
     PGraphicsOpenGL destpg = (PGraphicsOpenGL)dest;
@@ -144,52 +142,54 @@ public class SyphonClient {
         
     return dest;      
   }
+
+  
+  public PImage getImage(PImage dest) {
+    return getImage(dest, true);
+  }
+  
   
   /**
    * Copies the new frame to a PImage object.
    * It initializes dest if it is null or has the 
-   * wrong size. It is relatively slow because
-   * it copies the content of the texture frame
-   * to the pixels array of the image.
+   * wrong size.
    * 
    * @param dest
    */    
-  public PImage getImage(PImage dest) {
+  public PImage getImage(PImage dest, boolean loadPixels) {    
     JSyphonImage img = client.newFrameImageForContext();
     
     int texId = img.textureName();
     int texWidth = img.textureWidth();
     int texHeight = img.textureHeight();
-    
+
     if (dest == null || dest.width != texWidth || dest.height != texHeight) {            
       dest = parent.createImage(texWidth, texHeight, PConstants.ARGB);
     }
-
-    if (getBuffer == null || getBuffer.capacity() != texWidth * texHeight) {
-      getBuffer = IntBuffer.allocate(texWidth * texHeight);
+        
+    if (tempDest == null || tempDest.width != texWidth || tempDest.height != texHeight) {            
+      tempDest = parent.createGraphics(texWidth, texHeight, PConstants.P2D);
     }
-    getBuffer.rewind();
     
-    GL gl = pg.pgl.gl;
-    GL2 gl2 = gl.getGL2();    
+    PGraphicsOpenGL destpg = (PGraphicsOpenGL)tempDest;
+    destpg.setTexture(dest);
     
-    gl.glEnable(GL2.GL_TEXTURE_RECTANGLE_ARB);
-    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, texId);    
-    gl2.glGetTexImage(GL2.GL_TEXTURE_RECTANGLE_ARB, 0, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, getBuffer);
-    gl.glBindTexture(GL2.GL_TEXTURE_RECTANGLE_ARB, 0);
-    gl.glDisable(GL2.GL_TEXTURE_RECTANGLE_ARB);
+    destpg.beginDraw();
+    PGL pgl = destpg.beginPGL();
     
-    dest.loadPixels();
-    getBuffer.rewind();
-    getBuffer.get(dest.pixels);
+    pgl.drawTexture(PGL.GL_TEXTURE_RECTANGLE, texId, 
+                    texWidth, texHeight, 0, 0, texWidth, texHeight);
+
+    destpg.endPGL();
+    destpg.endDraw();
     
-    // Converts pixels stored in OpenGL format to Processing's ARGB
-    // plus flipping the image along Y.
-    PGraphicsOpenGL.nativeToJavaARGB(dest);
-    dest.updatePixels();
+    if (loadPixels) {
+      dest.loadPixels();
+    }
     
-    return dest;
+    return dest;      
   }
+
   
   /**
    * Stops the client.

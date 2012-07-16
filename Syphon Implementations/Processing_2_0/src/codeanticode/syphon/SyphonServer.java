@@ -39,8 +39,9 @@ import jsyphon.*;
  */
 public class SyphonServer {
 	protected PApplet parent;
-	protected PGraphicsOpenGL pgl;
+	protected PGraphicsOpenGL pg;
 	protected JSyphonServer server;
+	protected String serverName;
 	
   /**
    * Constructor that sets server with specified name.
@@ -48,14 +49,11 @@ public class SyphonServer {
    * @param parent
    * @param serverName
    */	
-  public SyphonServer(PApplet parent, String serverName) {
+  public SyphonServer(PApplet parent, String name) {
     this.parent = parent;
-    pgl = (PGraphicsOpenGL)parent.g;
-    
+    pg = (PGraphicsOpenGL)parent.g;
+    serverName = name;
     Syphon.init();
-    
-    server = new JSyphonServer();
-    server.initWithName(serverName);
   }
 	
   /**
@@ -74,8 +72,21 @@ public class SyphonServer {
    * @param source
    */ 	
   public void sendImage(PImage source) {
-    Texture tex = pgl.getTexture(source);
+    if (parent.frameCount == 0) {
+      PGraphics.showWarning("Only can send frames in draw()");
+      return;
+    }
+    
+    Texture tex = pg.getTexture(source);
     if (tex != null) {
+      if (server == null) {
+        // The server needs to be created after setup and all the 
+        // JOGL initialization has taken place. Otherwise frame
+        // sending doens't work...
+        server = new JSyphonServer();
+        server.initWithName(serverName);        
+      }
+      
       server.publishFrameTexture(tex.glID, tex.glTarget, 
                                  0, 0, tex.glWidth, tex.glHeight, 
                                  tex.glWidth, tex.glHeight, false);
