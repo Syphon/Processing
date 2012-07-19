@@ -87,7 +87,7 @@ public class SyphonServer {
         server.initWithName(serverName);        
       }
       
-      server.publishFrameTexture(tex.glID, tex.glTarget, 
+      server.publishFrameTexture(tex.glName, tex.glTarget, 
                                  0, 0, tex.glWidth, tex.glHeight, 
                                  tex.glWidth, tex.glHeight, false);
     } else {
