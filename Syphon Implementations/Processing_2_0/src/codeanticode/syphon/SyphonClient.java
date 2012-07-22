@@ -132,12 +132,12 @@ public class SyphonClient {
     
     PGraphicsOpenGL destpg = (PGraphicsOpenGL)dest;
     destpg.beginDraw();
-    PGL pgl = destpg.beginPGL();
+    PGL pgl = destpg.beginGL();
     
     pgl.drawTexture(PGL.GL_TEXTURE_RECTANGLE, texId, 
                     texWidth, texHeight, 0, 0, texWidth, texHeight);
 
-    destpg.endPGL();
+    destpg.endGL();
     destpg.endDraw();
         
     return dest;      
@@ -175,12 +175,12 @@ public class SyphonClient {
     destpg.setTexture(dest);
     
     destpg.beginDraw();
-    PGL pgl = destpg.beginPGL();
+    PGL pgl = destpg.beginGL();
     
     pgl.drawTexture(PGL.GL_TEXTURE_RECTANGLE, texId, 
                     texWidth, texHeight, 0, 0, texWidth, texHeight);
 
-    destpg.endPGL();
+    destpg.endGL();
     destpg.endDraw();
     
     if (loadPixels) {
