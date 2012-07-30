@@ -135,7 +135,7 @@ ${line}
 	
 	<target name="copy.build.libs">
 		<copy file="${build.location}/core.jar" tofile="${classpath.local.location}/core.jar" />
-		<copy file="${build.location}/jogl.all.jar" tofile="${classpath.local.location}/jogl.all.jar" />		
+		<copy file="${build.location}/jogl-all.jar" tofile="${classpath.local.location}/jogl-all.jar" />		
 	</target>
 	
 	
