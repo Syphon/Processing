@@ -82,7 +82,7 @@ public class SyphonServer {
       if (server == null) {
         // The server needs to be created after setup and all the 
         // JOGL initialization has taken place. Otherwise frame
-        // sending doens't work...
+        // sending doesn't work...
         server = new JSyphonServer();
         server.initWithName(serverName);        
       }

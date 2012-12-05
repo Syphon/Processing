@@ -82,7 +82,31 @@ public class SyphonClient {
    * @param parent
    * @param serverName
    */  
-  public SyphonClient(PApplet parent, String serverName) {
+  public SyphonClient(PApplet parent, String appName) {
+    this.parent = parent;
+    pg = (PGraphicsOpenGL)parent.g;
+    
+    Syphon.init();
+    
+    client = new JSyphonClient();
+    client.init();    
+    
+    if (appName != null && !appName.equals("")) {
+      client.setApplicationName(appName);
+    } else {
+      throw new RuntimeException("No valid application name was provided");
+    }
+  }
+
+  /**
+   * Constructor that binds this client to the
+   * specified named server.
+   * 
+   * @param parent
+   * @param appName
+   * @param serverName
+   */  
+  public SyphonClient(PApplet parent, String appName, String serverName) {
     this.parent = parent;
     pg = (PGraphicsOpenGL)parent.g;
     
@@ -90,10 +114,24 @@ public class SyphonClient {
     
     client = new JSyphonClient();
     client.init();
-    client.setApplicationName(serverName);    
-    //PApplet.println(client.isValid());
+    
+    boolean setAppName = false; 
+    if (appName != null && !appName.equals("")) {
+      client.setApplicationName(appName);
+      setAppName = true;
+    }
+    
+    boolean setServerName = false;
+    if (serverName != null && !serverName.equals("")) {
+      client.setServerName(serverName);
+      setServerName = true;
+    }
+    
+    if (!setAppName && !setServerName) {
+      throw new RuntimeException("No valid application or server names were provided");
+    }
   }
-
+  
   /**
    * Returns a description of the server.
    * 
@@ -168,12 +206,16 @@ public class SyphonClient {
     }
     
     PGraphicsOpenGL destpg = (PGraphicsOpenGL)tempDest;
-    destpg.setTexture(dest);
-    
     destpg.beginDraw();
     destpg.drawTexture(PGL.TEXTURE_RECTANGLE, texId, texWidth, texHeight, 
                        0, 0, texWidth, texHeight);
     destpg.endDraw();
+
+    pg.setCache(dest, destpg.getTexture());
+    
+    //destpg.setTexture(dest);
+    
+    
     
     if (loadPixels) {
       dest.loadPixels();
