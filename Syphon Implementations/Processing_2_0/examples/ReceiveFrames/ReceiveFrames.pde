@@ -9,6 +9,23 @@ public void setup() {
   // Create syhpon client to receive frames 
   // from running server with given name: 
   client = new SyphonClient(this, "Simple Server");
+
+  // A Syphon server can be specified by the name of the application that it contains it,
+  // its name, or both:
+  
+  // Only application name.
+  //client = new SyphonClient(this, "SendFrames");
+  
+  // Both application and server names
+  //client = new SyphonClient(this, "SendFrames", "Processing Syphon");
+  
+  // Only server name
+  //client = new SyphonClient(this, "", "Processing Syphon");
+    
+  // An application can have several servers:
+  //client = new SyphonClient(this, "Quartz Composer", "Raw Image");
+  //client = new SyphonClient(this, "Quartz Composer", "Scene");
+  
   
   background(0);
 }
