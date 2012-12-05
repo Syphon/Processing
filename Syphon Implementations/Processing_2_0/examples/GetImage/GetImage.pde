@@ -28,6 +28,6 @@ void keyPressed() {
   if (key == ' ') {
     client.stop();  
   } else if (key == 'd') {
-    println(client.description());
+    println(client.getServerName());
   }
 }
