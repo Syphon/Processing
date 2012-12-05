@@ -209,6 +209,7 @@ public class SyphonClient {
     
     PGraphicsOpenGL destpg = (PGraphicsOpenGL)dest;
     destpg.beginDraw();
+    destpg.background(0);
     destpg.drawTexture(PGL.TEXTURE_RECTANGLE, texId, texWidth, texHeight, 
                        0, 0, texWidth, texHeight);
     destpg.endDraw();
@@ -246,15 +247,13 @@ public class SyphonClient {
     
     PGraphicsOpenGL destpg = (PGraphicsOpenGL)tempDest;
     destpg.beginDraw();
+    destpg.background(0);
     destpg.drawTexture(PGL.TEXTURE_RECTANGLE, texId, texWidth, texHeight, 
                        0, 0, texWidth, texHeight);
     destpg.endDraw();
 
+    // Uses the PGraphics texture as the cache object for the image
     pg.setCache(dest, destpg.getTexture());
-    
-    //destpg.setTexture(dest);
-    
-    
     
     if (loadPixels) {
       dest.loadPixels();
