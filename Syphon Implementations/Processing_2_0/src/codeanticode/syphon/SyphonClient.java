@@ -57,7 +57,9 @@
 package codeanticode.syphon;
 
 import java.nio.IntBuffer;
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 
 import processing.core.*;
 import processing.opengl.*;
@@ -132,13 +134,50 @@ public class SyphonClient {
     }
   }
   
+  
+  @SuppressWarnings("unchecked")
   /**
-   * Returns a description of the server.
+   * Returns an array of hash maps containing the names of the currently
+   * available Syphon servers.
    * 
-   * @return Dictionary
+   * @return HashMap<String, String>
+   */     
+  static public HashMap<String, String>[] listServers() {
+    ArrayList<Dictionary<String, String>> tempList = JSyphonServerList.getList();
+    
+    HashMap<String, String>[] outArray = new HashMap[tempList.size()]; 
+    for (int i = 0; i < tempList.size(); i++) {
+      Dictionary<String, String> desc = tempList.get(i);
+      String appName = desc.get("SyphonServerDescriptionAppNameKey");
+      String serverName = desc.get("SyphonServerDescriptionNameKey");
+      HashMap<String, String> res = new HashMap<String, String>();
+      res.put("AppName", appName);
+      res.put("ServerName", serverName);      
+      outArray[i] = res;
+    }
+                               
+    return outArray;
+  }
+  
+  
+  /**
+   * Returns a hash map containing two key-value pairs: one (key=="AppName")
+   * containing the name of the application running the server bound to this 
+   * client, the other (key=="ServerName") is the actual name of the server.
+   * 
+   * @return HashMap<String, String>
    */   
-  public Dictionary<String, String> description() {
-    return client.serverDescription();  
+  public HashMap<String, String> getServerName() {
+    Dictionary<String, String> desc = client.serverDescription();
+    
+    String appName = desc.get("SyphonServerDescriptionAppNameKey");
+    String serverName = desc.get("SyphonServerDescriptionNameKey");
+    
+    HashMap<String, String> res = new HashMap<String, String>();
+    res.put("AppName", appName);
+    res.put("ServerName", serverName);
+    
+    return res;  
   }
 
   /**
