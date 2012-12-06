@@ -61,7 +61,6 @@ package codeanticode.syphon;
  * Syphon is an open source Mac OS X technology that allows 
  * applications to share frames - full frame rate video or stills - 
  * with one another in realtime. 
- * It also requires Processing 2.0a4 or newer with the P3D renderer.
  * 
  * {@link http://syphon.v002.info/}
  * 
@@ -76,9 +75,6 @@ public class Syphon {
     * 
     */   
    protected static void init() {
-     if (count == 0) {
-       System.out.println("##name## ##version## by ##author##");
-     }
      count++;
    }
      

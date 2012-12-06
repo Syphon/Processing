@@ -78,6 +78,23 @@ public class SyphonClient {
   
   /**
    * Constructor that binds this client to the
+   * first available server.
+   * 
+   * @param parent
+   */  
+  public SyphonClient(PApplet parent) {
+    this.parent = parent;
+    pg = (PGraphicsOpenGL)parent.g;
+    
+    Syphon.init();
+    
+    client = new JSyphonClient();
+    client.init();   
+  }
+  
+  
+  /**
+   * Constructor that binds this client to the
    * specified named server.
    * 
    * @param parent
@@ -99,6 +116,7 @@ public class SyphonClient {
     }
   }
 
+  
   /**
    * Constructor that binds this client to the
    * specified named server.
@@ -142,6 +160,8 @@ public class SyphonClient {
    */
   @SuppressWarnings("unchecked")
   static public HashMap<String, String>[] listServers() {
+    Syphon.init();
+    
     ArrayList<HashMap<String, String>> tempList = null;
     int size0 = 0;
     int count = 0;
@@ -156,7 +176,7 @@ public class SyphonClient {
         count++;
       }
       size0 = tempList.size();
-      if (5 < count) {
+      if (10 < count) {
         break;
       }
     }
