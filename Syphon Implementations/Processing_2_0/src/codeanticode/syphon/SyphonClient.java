@@ -58,7 +58,6 @@ package codeanticode.syphon;
 
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 import processing.core.*;
@@ -134,20 +133,37 @@ public class SyphonClient {
     }
   }
   
-  
-  @SuppressWarnings("unchecked")
+    
   /**
    * Returns an array of hash maps containing the names of the currently
    * available Syphon servers.
    * 
    * @return HashMap<String, String>
-   */     
+   */
+  @SuppressWarnings("unchecked")
   static public HashMap<String, String>[] listServers() {
-    ArrayList<Dictionary<String, String>> tempList = JSyphonServerList.getList();
+    ArrayList<HashMap<String, String>> tempList = null;
+    int size0 = 0;
+    int count = 0;
+    for (int i = 0; i < 50; i++) {
+      try {
+        Thread.sleep(10);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      tempList = JSyphonServerList.getList();
+      if (tempList.size() == size0) {
+        count++;
+      }
+      size0 = tempList.size();
+      if (5 < count) {
+        break;
+      }
+    }
     
     HashMap<String, String>[] outArray = new HashMap[tempList.size()]; 
     for (int i = 0; i < tempList.size(); i++) {
-      Dictionary<String, String> desc = tempList.get(i);
+      HashMap<String, String> desc = tempList.get(i);
       String appName = desc.get("SyphonServerDescriptionAppNameKey");
       String serverName = desc.get("SyphonServerDescriptionNameKey");
       HashMap<String, String> res = new HashMap<String, String>();
@@ -168,7 +184,7 @@ public class SyphonClient {
    * @return HashMap<String, String>
    */   
   public HashMap<String, String> getServerName() {
-    Dictionary<String, String> desc = client.serverDescription();
+    HashMap<String, String> desc = client.serverDescription();
     
     String appName = desc.get("SyphonServerDescriptionAppNameKey");
     String serverName = desc.get("SyphonServerDescriptionNameKey");
