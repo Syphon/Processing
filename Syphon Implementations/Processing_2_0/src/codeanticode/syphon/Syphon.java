@@ -78,7 +78,7 @@ public class Syphon {
     */   
    protected static void init() {
      if (count == 0) {
-       PApplet.println("Syphon library for Processing " + VERSION);
+       PApplet.println("Processing Syphon library " + VERSION);
      }
      count++;
    }
