@@ -56,8 +56,6 @@
 
 package codeanticode.syphon;
 
-import processing.core.PApplet;
-
 /**
  * Processing library that encapsulates Syphon clients and servers.
  * Syphon is an open source Mac OS X technology that allows 
@@ -68,7 +66,7 @@ import processing.core.PApplet;
  * 
  */ 
 public class Syphon {  
-   protected final static String VERSION = "##version##";
+  public final static String VERSION = "##library.prettyVersion##";
   
    protected static int count;
 
@@ -77,8 +75,8 @@ public class Syphon {
     * 
     */   
    protected static void init() {
-     if (count == 0) {
-       PApplet.println("Processing Syphon library " + VERSION);
+     if (count == 0) {       
+       System.out.println("##library.name## ##library.prettyVersion## by ##author##");       
      }
      count++;
    }
