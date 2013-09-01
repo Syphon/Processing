@@ -1,6 +1,0 @@
-[submodule "Java"]
-	path = Java
-	url = https://github.com/Syphon/Java.git
-[submodule "Syphon-Framework"]
-	path = Syphon-Framework
-	url = https://github.com/Syphon/Syphon-Framework.git
