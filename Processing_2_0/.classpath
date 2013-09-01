@@ -4,6 +4,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/processing-core"/>
 	<classpathentry kind="lib" path="/processing-core/library/jogl-all.jar"/>
-	<classpathentry kind="lib" path="lib/Java/JSyphon/distribution/jsyphon.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
