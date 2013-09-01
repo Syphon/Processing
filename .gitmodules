@@ -1,6 +1,1 @@
-[submodule "Processing_2_0/lib/Java"]
-	path = Processing_2_0/lib/Java
-	url = https://github.com/Syphon/Java.git
-[submodule "Processing_2_0/lib/Syphon-Framework"]
-	path = Processing_2_0/lib/Syphon-Framework
-	url = https://github.com/Syphon/Syphon-Framework.git
+
