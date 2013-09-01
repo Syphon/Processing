@@ -95,6 +95,16 @@ public class SyphonServer {
     }
   }	
   
+  
+  /**
+   * Sends the screen image to the bound client.
+   * 
+   */   
+  public void sendScreen() {
+    sendImage(pg);    
+  }
+  
+  
   /**
    * Stops the server.
    * 
