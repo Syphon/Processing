@@ -54,8 +54,38 @@ public class SyphonServer {
     pg = (PGraphicsOpenGL)parent.g;
     serverName = name;
     Syphon.init();
+    parent.registerMethod("dispose", this);
   }
+  
+  
+  /**
+   * This method is called automatically when the sketch is disposed, so making
+   * sure that the server is properly stopped and Syphon doesn't complain about
+   * memory not being properly released:
+   * https://github.com/Syphon/Processing/issues/4
+   * 
+   */
+  public void dispose() {
+    server.stop();
+  } 
 	
+  
+  /**
+   * The class finalizer tries to make sure that the server is stopped. No 
+   * guarantee that this method is ever called by the GC, but just in case.
+   * 
+   */
+  protected void finalize() throws Throwable {
+    try {
+      if (server != null) {
+        server.stop();
+      }
+    } finally {
+      super.finalize();
+    }
+  }  
+  
+  
   /**
    * Returns true if this server is bound to any
    * client.
@@ -66,6 +96,7 @@ public class SyphonServer {
     return server.hasClients();
   }	
 	
+  
   /**
    * Sends the source image to the bound client.
    * 
@@ -111,6 +142,6 @@ public class SyphonServer {
    */  
   public void stop() {
     server.stop();
-  }  
+  }
 }
 
