@@ -109,7 +109,7 @@ public class SyphonClient {
     client = new JSyphonClient();
     client.init();    
     
-    if (appName != null && !appName.equals("")) {
+    if (appName != null) {
       client.setApplicationName(appName);
     } else {
       throw new RuntimeException("No valid application name was provided");

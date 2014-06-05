@@ -10,8 +10,8 @@ public void setup() {
   println(SyphonClient.listServers());
     
   // Create syhpon client to receive frames 
-  // from running server with given name: 
-  client = new SyphonClient(this, "Simple Server");
+  // from the first available running server: 
+  client = new SyphonClient(this);
 
   // A Syphon server can be specified by the name of the application that it contains it,
   // its name, or both:

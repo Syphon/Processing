@@ -7,8 +7,8 @@ public void setup() {
   size(480, 340, P3D);
   
   // Create syhpon client to receive frames 
-  // from running server with given name: 
-  client = new SyphonClient(this, "Simple Server");
+  // from the first available running server: 
+  client = new SyphonClient(this);
   
   background(0);
 }
