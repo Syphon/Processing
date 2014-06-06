@@ -262,7 +262,7 @@ public class SyphonClient {
   
   
   /**
-   * Copies the new frame to a PImage object.
+   * Copies the new frame into a PImage object.
    * It initializes dest if it is null or has the 
    * wrong size.
    * 
@@ -285,6 +285,7 @@ public class SyphonClient {
     
     PGraphicsOpenGL destpg = (PGraphicsOpenGL)tempDest;
     destpg.beginDraw();
+    destpg.background(255, 0, 0);
     destpg.background(0);
     PGL pgl = destpg.beginPGL();
     pgl.drawTexture(PGL.TEXTURE_RECTANGLE, texId, texWidth, texHeight, 
@@ -293,10 +294,14 @@ public class SyphonClient {
     destpg.endDraw();
 
     // Uses the PGraphics texture as the cache object for the image
-    pg.setCache(dest, destpg.getTexture());
+    Texture tex = destpg.getTexture();
+    System.err.println("texture from temporary canvas: " + tex);
+    pg.setCache(dest, tex);
     
     if (loadPixels) {
       dest.loadPixels();
+      tex.get(dest.pixels);
+      dest.setLoaded(false);
     }
     
     return dest;      
