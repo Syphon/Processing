@@ -295,9 +295,7 @@ public class SyphonClient {
 
     // Uses the PGraphics texture as the cache object for the image
     Texture tex = destpg.getTexture();
-    System.err.println("texture from temporary canvas: " + tex);
-    pg.setCache(dest, tex);
-    
+    pg.setCache(dest, tex);    
     if (loadPixels) {
       dest.loadPixels();
       tex.get(dest.pixels);
