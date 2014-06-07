@@ -3,7 +3,21 @@ Processing
 
 Syphon Implementation for Processing 2.0
 
-In order to build the library, you need to clone the Java submodule, which contains the JSyphon jar and JNI native libraries.
+Getting Started:
+====
+
+* After cloning the repository, use ```git submodule update --init``` to pull in the <a href="https://github.com/Syphon/Java">Java</a> repos
+
+* Set the appropriate paths in the resources/build.properties file
+
+* For example, in order to update the Java sumbodule with the latest upstream changes and then commit the update, you would do:
+
+```bash
+cd Processing_2_0/java/
+git pull origin master
+cd ..
+git commit java -m "Updated java submodule"
+```
 
 Submodules can can a bit tricky to use, below you have a couple of references that can be useful:
 
@@ -13,16 +27,8 @@ Submodule cheat sheet: http://blog.jacius.info/git-submodule-cheat-sheet/
 
 Submodules in EGit:  http://wiki.eclipse.org/EGit/User_Guide#Working_with_Submodules
 
-For example, in order to update the java sumbodule with the latest upstream changes and then commit the update, you would do:
-
-```bash
-cd Processing_2_0/java/
-git pull origin master
-cd ..
-git commit java -m "Updated java submodule"
-```
-
-ACKNOWLEDGMENTS
+Acknowledgments
+====
 
 1) Syphon.framework implemented by Tom Butterworth and Anton Marini:
 http://syphon.v002.info/
