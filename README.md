@@ -1,14 +1,14 @@
 Processing
 ==========
 
-Syphon Implementation for Processing 2.0
+Syphon library for Processing 2.0 and up.
 
 Getting Started:
 ====
 
-* After cloning the repository, use ```git submodule update --init``` to pull in the <a href="https://github.com/Syphon/Java">Java</a> repos
+* After cloning the repository, use ```git submodule update --init``` to pull in the <a href="https://github.com/Syphon/Java">Java</a> repo.
 
-* Set the appropriate paths in the resources/build.properties file
+* Set the appropriate paths in the resources/build.properties file.
 
 * For example, in order to update the Java sumbodule with the latest upstream changes and then commit the update, you would do:
 
@@ -26,6 +26,10 @@ Chapter in Git Pro book about submodules: http://git-scm.com/book/en/Git-Tools-S
 Submodule cheat sheet: http://blog.jacius.info/git-submodule-cheat-sheet/
 
 Submodules in EGit:  http://wiki.eclipse.org/EGit/User_Guide#Working_with_Submodules
+
+Andres Colubri
+
+June 7 2014
 
 Acknowledgments
 ====
