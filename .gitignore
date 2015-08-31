@@ -1,3 +1,4 @@
-/bin
-/distribution
-/bin
+.DS_Store
+*/.DS_Store
+bin
+distribution
