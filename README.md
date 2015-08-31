@@ -20,18 +20,6 @@ git add java
 git commit java -m "Updated java submodule"
 ```
 
-Submodules can can a bit tricky to use, below you have a couple of references that can be useful:
-
-Chapter in Git Pro book about submodules: http://git-scm.com/book/en/Git-Tools-Submodules
-
-Submodule cheat sheet: http://blog.jacius.info/git-submodule-cheat-sheet/
-
-Submodules in EGit:  http://wiki.eclipse.org/EGit/User_Guide#Working_with_Submodules
-
-Andres Colubri
-
-June 7 2014
-
 Acknowledgments
 ====
 
