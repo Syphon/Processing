@@ -45,15 +45,15 @@
 	<property name="project.tmp" location="tmp"/>
 	<property name="project.web" location="web"/>
 	<property name="project.data" location="data"/>
-	<property name="project.lib" location="lib"/>	
+	<property name="project.lib" location="lib"/>
 	<property name="project.bin" location="bin"/>
 	<property name="project.bin.data" location="${project.bin}/data"/>
 	<property name="project.examples" location="examples"/>
 	<property name="project.reference" location="reference"/>
 	<property name="project.dist" location="distribution"/>
 	<property name="project.dist.version" location="distribution/${project.name}-${library.version}"/>
-	<property name="install.source" location="resources/install_instructions.txt"/>
-	<property name="install.destination" location="${project.dist.version}/INSTALL.txt"/>
+	<property name="install.source" location="resources/README.md"/>
+	<property name="install.destination" location="${project.dist.version}/README.md"/>
 	<property name="libprops.source" location="resources/library.properties"/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
@@ -68,7 +68,7 @@
 		<fileset dir="${classpath.libraries.location}" includes="**/*.jar" />
 		<fileset dir="${project.lib}" includes="**/*.jar" />
 		<fileset dir="${jsyphon.location}/jar" includes="**/*.jar" />
-	</path>		
+	</path>	
 
 	
 
@@ -181,7 +181,7 @@ ${line}
 	  	</copy>		  	
 	  	<copy todir="${project.tmp}/${project.name}/${folder}">
   			<fileset dir="${jsyphon.location}/native_libs"/>
-	  	</copy>	
+	  	</copy>		  	
 	</target>
 	
 	
@@ -279,8 +279,11 @@ ${line}
         <replaceregexp file="${file}" match="##library.version##" replace="${library.version}" flags="g" />
         <replaceregexp file="${file}" match="##library.prettyVersion##" replace="${library.prettyVersion}" flags="g" /> 
         
+        <replaceregexp file="${file}" match="##compatible.minRevision##" replace="${compatible.minRevision}" flags="g" />
+        <replaceregexp file="${file}" match="##compatible.maxRevision##" replace="${compatible.maxRevision}" flags="g" /> 
+        
         <replaceregexp file="${file}" match="##library.url##" replace="${library.url}" flags="g" />
-        <replaceregexp file="${file}" match="##library.category##" replace="${library.category}" flags="g" />
+        <replaceregexp file="${file}" match="##library.categories##" replace="${library.categories}" flags="g" />
         <replaceregexp file="${file}" match="##library.sentence##" replace="${library.sentence}" flags="g" />
     	<replaceregexp file="${file}" match="##library.paragraph##" replace="${library.paragraph}" flags="g" />
     	<replaceregexp file="${file}" match="##library.keywords##" replace="${library.keywords}" flags="g" />
@@ -297,7 +300,7 @@ ${line}
 	
 	
 	<target name="generate.install.library" if="is.normal">	
-		<copy file="${install.source}" tofile="${project.dist.version}/INSTALL.txt" />
+		<copy file="${install.source}" tofile="${install.destination}" />
 		
 		<antcall target="parse.file"><param name="file" value="${install.destination}"/></antcall>
 	</target>	
