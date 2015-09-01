@@ -215,16 +215,28 @@ public class SyphonClient {
     
     return res;  
   }
+  
+  
+  /**
+   * Returns true if the server this client is listening to does exist.
+   * 
+   * @return boolean 
+   */   
+  public boolean active() {
+    return client.isValid();
+  }
 
+  
   /**
    * Returns true if a new frame is available.
    * 
    * @return boolean 
    */   
-  public boolean available() {
+  public boolean newFrameAvailable() {
     return client.hasNewFrame();
   }
 
+  
   /**
    * Copies the new frame to a PGraphics object.
    * It initializes dest if it is null or has the 
@@ -268,7 +280,9 @@ public class SyphonClient {
    * 
    * @param dest
    */    
-  public PImage getImage(PImage dest, boolean loadPixels) {    
+  public PImage getImage(PImage dest, boolean loadPixels) {
+    if (!client.isValid()) return null;
+    
     JSyphonImage img = client.newFrameImageForContext();
     
     int texId = img.textureName();
