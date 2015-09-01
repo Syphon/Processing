@@ -3,8 +3,12 @@ import codeanticode.syphon.*;
 PGraphics canvas;
 SyphonServer server;
 
-void setup() {
+void settings() {
   size(400,400, P3D);
+  PJOGL.profile=1;
+}
+
+void setup() { 
   canvas = createGraphics(400, 400, P3D);
   
   // Create syhpon server to send frames out.

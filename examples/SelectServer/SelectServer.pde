@@ -10,7 +10,6 @@ int nClients;
 void settings() {
   size(400, 400, P2D);
   PJOGL.profile=1;
-    
 }
 
 void setup() {
@@ -44,7 +43,7 @@ void draw() {
   int targetIndex =  frameCount % nClients;
   SyphonClient targetClient = clients[targetIndex];
 
-  if (targetClient.available()) {
+  if (targetClient.newFrame()) {
     canvas[targetIndex] = targetClient.getGraphics(canvas[targetIndex]);
     image(canvas[targetIndex], 0, 0, width, height);  
   }

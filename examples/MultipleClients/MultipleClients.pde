@@ -5,8 +5,13 @@ import codeanticode.syphon.*;
 int nClients = 4;
 PGraphics[] canvas;
 SyphonClient[] clients;
-void setup() {
+
+void settings() {
   size(400, 400, P3D);
+  PJOGL.profile = 1;
+}
+
+void setup() {
   canvas = new PGraphics[nClients];
   for (int i = 0; i < nClients; i++) {
     canvas[i] = createGraphics(200, 200, P2D);
@@ -21,7 +26,7 @@ void setup() {
 
 void draw() {
   for (int i = 0; i < nClients; i++) {
-    if (clients[i].available()) {
+    if (clients[i].newFrame()) {
       canvas[i] = clients[i].getGraphics(canvas[i]);
       image(canvas[i], 200 * (i % 2), 200 * (i / 2)); 
     }

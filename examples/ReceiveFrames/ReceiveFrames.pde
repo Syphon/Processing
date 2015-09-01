@@ -3,9 +3,12 @@ import codeanticode.syphon.*;
 PGraphics canvas;
 SyphonClient client;
 
-public void setup() {
+void settings() {
   size(480, 340, P3D);
-    
+  PJOGL.profile = 1;
+}
+
+public void setup() {
   println("Available Syphon servers:");
   println(SyphonClient.listServers());
     
@@ -33,7 +36,7 @@ public void setup() {
 }
 
 public void draw() {    
-  if (client.available()) {
+  if (client.newFrame()) {
     canvas = client.getGraphics(canvas);
     image(canvas, 0, 0, width, height);    
   }  

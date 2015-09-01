@@ -233,7 +233,7 @@ public class SyphonClient {
    * @return boolean 
    */   
   public boolean newFrame() {
-    return client.hasNewFrame();
+    return client.isValid() && client.hasNewFrame();
   }
 
   
