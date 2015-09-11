@@ -6,7 +6,9 @@ Syphon library for Processing 2.0 and up. Note that latest revision on master is
 Getting Started:
 ====
 
-* After cloning the repository, use ```git submodule update --init``` to pull in the <a href="https://github.com/Syphon/Java">Java</a> repo.
+* Clone the repository with ```git clone --recurse-submodules https://github.com/Syphon/Processing.git``` in order to pull in the <a href="https://github.com/Syphon/Java">Java</a> repo.
+
+* You can also pull in the Java repo after cloning the repository with ```git submodule update --init```.
 
 * Set the appropriate paths in the resources/build.properties file.
 
