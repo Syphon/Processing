@@ -6,12 +6,14 @@ int nClients = 4;
 PGraphics[] canvas;
 SyphonClient[] clients;
 
-void settings() {
-  size(400, 400, P3D);
-  PJOGL.profile = 1;
-}
+//void settings() {
+//  size(400, 400, P3D);
+//  PJOGL.profile = 1;
+//}
 
 void setup() {
+  size(400, 400, P3D);
+  
   canvas = new PGraphics[nClients];
   for (int i = 0; i < nClients; i++) {
     canvas[i] = createGraphics(200, 200, P2D);

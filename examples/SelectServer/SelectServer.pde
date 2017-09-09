@@ -9,7 +9,7 @@ int nClients;
 
 void settings() {
   size(400, 400, P2D);
-  PJOGL.profile=1;
+  PJOGL.profile=2;
 }
 
 void setup() {

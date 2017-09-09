@@ -5,7 +5,7 @@ SyphonClient client;
 
 void settings() {
   size(480, 340, P3D);
-  PJOGL.profile = 1;
+  PJOGL.profile = 2;
 }
 
 void setup() {
