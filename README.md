@@ -10,9 +10,7 @@ Getting Started:
 
 * You can also pull in the Java repo after cloning the repository with ```git submodule update --init```.
 
-* Set the appropriate paths in the resources/build.properties file.
-
-* For example, in order to update the Java sumbodule with the latest upstream changes and then commit the update, you would do:
+* In order to update the Java sumbodule with the latest upstream changes and then commit the update, you would do:
 
 ```bash
 cd java/
@@ -21,6 +19,17 @@ cd ..
 git add java
 git commit java -m "Updated java submodule"
 ```
+
+* Set the appropriate paths in the resources/build.properties file.
+
+* Build the Processing library:
+
+```bash
+cd resources
+ant
+```
+
+The library package should be created inside the distribution folder, and it should also be installed in the sketchbook folder
 
 Acknowledgments
 ====
