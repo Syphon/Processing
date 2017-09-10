@@ -6,11 +6,6 @@ int nClients = 4;
 PGraphics[] canvas;
 SyphonClient[] clients;
 
-//void settings() {
-//  size(400, 400, P3D);
-//  PJOGL.profile = 1;
-//}
-
 void setup() {
   size(400, 400, P3D);
   

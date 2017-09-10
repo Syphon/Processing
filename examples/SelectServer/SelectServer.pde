@@ -7,14 +7,9 @@ SyphonClient[] clients;
 
 int nClients;
 
-void settings() {
-  size(400, 400, P2D);
-  PJOGL.profile=2;
-}
-
 void setup() {
+  size(400, 400, P2D);
   frameRate(1);
-
 
   HashMap<String, String>[] allServers = SyphonClient.listServers();
 

@@ -3,12 +3,8 @@ import codeanticode.syphon.*;
 PImage img;
 SyphonClient client;
 
-void settings() {
-  size(480, 340, P3D);
-  PJOGL.profile = 2;
-}
-
 void setup() {
+  size(480, 340, P3D);
   // Create syhpon client to receive frames 
   // from the first available running server: 
   client = new SyphonClient(this);

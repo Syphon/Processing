@@ -7,12 +7,9 @@ PGraphics[] canvas;
 SyphonServer[] servers;
 color[] colors;
 
-void settings() {
-  size(400, 400, P3D);
-  PJOGL.profile = 3;
-}
-
 void setup() {
+  size(400, 400, P3D);
+
   canvas = new PGraphics[nServers];
   for (int i = 0; i < nServers; i++) {
     canvas[i] = createGraphics(200, 200, P3D);

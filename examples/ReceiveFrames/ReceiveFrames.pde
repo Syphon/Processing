@@ -3,11 +3,6 @@ import codeanticode.syphon.*;
 PGraphics canvas;
 SyphonClient client;
 
-//void settings() {
-//  size(480, 340, P3D);
-//  PJOGL.profile = 1;
-//}
-
 public void setup() {
   size(480, 340, P3D);
   
