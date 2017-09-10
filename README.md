@@ -18,6 +18,7 @@ git pull origin master
 cd ..
 git add java
 git commit java -m "Updated java submodule"
+git push
 ```
 
 * Set the appropriate paths in the resources/build.properties file.
@@ -34,7 +35,7 @@ The library package should be created inside the distribution folder, and it sho
 Acknowledgments
 ====
 
-1) Syphon.framework implemented by Tom Butterworth and Anton Marini:
+1) Syphon Framework implemented by Tom Butterworth and Anton Marini:
 http://syphon.v002.info/
 
 2) Processing Library Template:
