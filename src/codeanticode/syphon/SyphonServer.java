@@ -58,6 +58,21 @@ public class SyphonServer {
   }
   
   
+
+  /**
+   * Starts the underlying JSyphon server.
+   * The server needs to be created after setup
+   * and all the JOGL initialization has taken place.
+   */
+  public void start()
+  {
+    if (server == null) {
+      server = new JSyphonServer();
+      server.initWithName(serverName);
+    }
+  }
+
+
   /**
    * This method is called automatically when the sketch is disposed, so making
    * sure that the server is properly stopped and Syphon doesn't complain about
@@ -98,8 +113,9 @@ public class SyphonServer {
 	
   
   /**
-   * Sends the source image to the bound client.
-   * 
+   * Sends the source image to the bound client
+   * and lazy initialises the JSyphon sever.
+   *
    * @param source
    */ 	
   public void sendImage(PImage source) {
@@ -111,11 +127,7 @@ public class SyphonServer {
     Texture tex = pg.getTexture(source);
     if (tex != null) {
       if (server == null) {
-        // The server needs to be created after setup and all the 
-        // JOGL initialization has taken place. Otherwise frame
-        // sending doesn't work...
-        server = new JSyphonServer();
-        server.initWithName(serverName);        
+        start();
       }
       
       server.publishFrameTexture(tex.glName, tex.glTarget, 
