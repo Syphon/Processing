@@ -93,6 +93,9 @@ public class SyphonServer {
    * @return boolean 
    */    
   public boolean hasClients() {
+    if(server == null)
+      return false;
+
     return server.hasClients();
   }	
 	
