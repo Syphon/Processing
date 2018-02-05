@@ -60,15 +60,21 @@ public class SyphonServer {
   
 
   /**
-   * Starts the underlying JSyphon server.
+   * Initialises the underlying JSyphon server.
    * The server needs to be created after setup
    * and all the JOGL initialization has taken place.
    */
-  public void start()
+  public void init()
   {
-    if (server == null) {
-      server = new JSyphonServer();
-      server.initWithName(serverName);
+    Texture tex = pg.getTexture(source);
+    if (tex != null) {
+      if (server == null) {
+        server = new JSyphonServer();
+        server.initWithName(serverName);
+      }
+    }
+    else {
+      PGraphics.showWarning("Texture is null");
     }
   }
 
@@ -108,8 +114,9 @@ public class SyphonServer {
    * @return boolean 
    */    
   public boolean hasClients() {
+    // lazy init server
     if(server == null)
-      return false;
+      init();
 
     return server.hasClients();
   }	
@@ -126,13 +133,15 @@ public class SyphonServer {
       PGraphics.showWarning("Only can send frames in draw()");
       return;
     }
-    
+
+    // lazy init server
+    if (server == null) {
+      init();
+    }
+
+    // send frame if texture is available
     Texture tex = pg.getTexture(source);
     if (tex != null) {
-      if (server == null) {
-        start();
-      }
-      
       server.publishFrameTexture(tex.glName, tex.glTarget, 
                                  0, 0, tex.glWidth, tex.glHeight, 
                                  tex.glWidth, tex.glHeight, false);
