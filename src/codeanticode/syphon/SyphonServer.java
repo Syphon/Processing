@@ -124,7 +124,7 @@ public class SyphonServer {
   
   /**
    * Sends the source image to the bound client
-   * and lazy initialises the JSyphon sever.
+   * and lazy initialises the JSyphon server.
    *
    * @param source
    */ 	
