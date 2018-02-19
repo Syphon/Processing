@@ -64,7 +64,7 @@ public class SyphonServer {
    * The server needs to be created after setup
    * and all the JOGL initialization has taken place.
    */
-  public void init()
+  private void init()
   {
     if (server == null) {
       server = new JSyphonServer();
