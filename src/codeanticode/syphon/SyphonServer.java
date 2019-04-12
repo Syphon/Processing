@@ -150,8 +150,7 @@ public class SyphonServer {
    *
    */
   public void sendScreen() {
-    // Should use enableFBOLayer() instead...
-    pg.pgl.requestFBOLayer();
+    pg.pgl.enableFBOLayer();
     sendImage(pg);
   }
 
