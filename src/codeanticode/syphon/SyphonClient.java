@@ -290,7 +290,7 @@ public class SyphonClient {
     int texHeight = img.textureHeight();
 
     if (dest == null || dest.width != texWidth || dest.height != texHeight) {            
-      dest = parent.createImage(texWidth, texHeight, PConstants.ARGB);
+      dest = parent.createImage(texWidth*parent.pixelDensity, texHeight*parent.pixelDensity, PConstants.ARGB);
     }
         
     if (tempDest == null || tempDest.width != texWidth || tempDest.height != texHeight) {            
