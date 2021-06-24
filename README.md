@@ -1,7 +1,7 @@
 Processing
 ==========
 
-Syphon library for Processing 2.0 and up. Note that latest revision on master is compatible with 3.0 only. Use the [v2 branch](https://github.com/Syphon/Processing/tree/v2) for the last version compatible with 2.0.
+Syphon library for Processing. Note that latest revision on master is compatible with Processing 3.0 and higher. Use the [v2 branch](https://github.com/Syphon/Processing/tree/v2) for the last version compatible with Processing 2.0. 
 
 Getting Started:
 ====
