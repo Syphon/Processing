@@ -4,7 +4,7 @@ PGraphics canvas;
 SyphonServer server;
 
 void setup() { 
-  size(400,400, P3D);
+  size(400, 400, P3D);
   canvas = createGraphics(400, 400, P3D);
   
   // Create syhpon server to send frames out.

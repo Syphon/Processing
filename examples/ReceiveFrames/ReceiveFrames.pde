@@ -4,10 +4,7 @@ PGraphics canvas;
 SyphonClient client;
 
 public void setup() {
-  size(480, 340, P3D);
-  
-  println("Available Syphon servers:");
-  println(SyphonClient.listServers());
+  size(400, 400, P3D);
     
   // Create syhpon client to receive frames 
   // from the first available running server: 
@@ -43,6 +40,10 @@ void keyPressed() {
   if (key == ' ') {
     client.stop();  
   } else if (key == 'd') {
+    println("Getting frames from server:");
     println(client.getServerName());
+  } else if (key == 'l') {
+    println("Available Syphon servers:");
+    println(SyphonClient.listServers());
   }
 }
