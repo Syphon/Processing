@@ -96,7 +96,7 @@ public class SyphonServer {
         server.stop();
       }
     } finally {
-      super.finalize();
+      // super.finalize();
     }
   }
 
