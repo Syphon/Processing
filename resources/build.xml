@@ -9,17 +9,14 @@
 		If you have recommendations for improvements, please let Elie know 
 		at prisonerjohn@gmail.com
 -->
-    
-	
-
+  
 	<property file="./resources/build.properties" />
-	
+
 	<description>
         ${ant.description}
     </description>
-    	
-	
-	
+
+	<property environment="env"/>
     
 	<property name="line" value="------------------------------------------------------------------------------------------------" />
 	
@@ -306,22 +303,94 @@ ${line}
 	</target>	
 	
 	
+  <target name="macos-sign" if="env.SYPHON_LIB_PASSWORD">
+    <echo>
+      Code signing will only work if you have a $99/yr Apple developer ID.
+
+      With a proper ID, if code signing fails, you may need to use:
+      export CODESIGN_ALLOCATE="/Applications/Xcode.app/Contents/Developer/usr/bin/codesign_allocate"
+    </echo>
+
+    <apply executable="/usr/bin/codesign" dir="resources" failonerror="true">
+      <arg value="--sign" />
+      <arg value="Developer ID Application" />
+
+      <!-- remove all other signatures -->
+      <arg value="--force" />
+
+      <arg value="--entitlements" />
+      <arg value="ffs.entitlements" />
+
+      <!-- recursively sign everything -->
+      <arg value="--deep" />
+
+      <!-- enable the "hardened runtime" -->
+      <arg value="--options" />
+      <arg value="runtime" />
+
+      <fileset dir="${project.dist.version}/tmp/${project.name}/library">
+        <patternset>
+          <include name="**/*.jnilib" />
+          <include name="**/Syphon" />
+        </patternset>
+      </fileset>
+    </apply>
+
+    <echo>
+      Signed Processing Syphon libraries
+    </echo>    
+
+  </target>
+
+  <target name="macos-notarize" if="env.SYPHON_LIB_PASSWORD">
+
+    <exec executable="/usr/bin/xcrun" dir="resources" failonerror="true">
+      <arg value="altool" />
+      <arg value="--notarize-app" />
+
+      <arg value="--primary-bundle-id" />
+      <arg value="codeanticode.syphon" />
+
+      <arg value="--username" />
+      <arg value="${env.APPLE_DEVELOPER_ID}" />
+
+      <arg value="--password" />
+      <arg value="${env.SYPHON_LIB_PASSWORD}" />
+
+      <arg value="--asc-provider" />
+      <arg value="${env.PROVIDER_SHORT_NAME}" />
+
+      <arg value="--file" />
+      <arg value="${project.dist.version}/${project.name}.zip" />
+
+    </exec>  	
+
+    <echo>
+      Check on notarization status with:
+
+      xcrun altool -u $APPLE_DEVELOPER_ID -p $SYPHON_LIB_PASSWORD --notarization-info [the RequestUUID above]
+    </echo>
+
+  </target>
 	
 	<target name="generate.zip" if="is.normal">
 		<!-- zip the distribution of the library -->
 		
 		<move todir="${project.dist.version}/tmp/${project.name}">
   			<fileset dir="${project.dist.version}/${project.name}" />
-  		</move>
+  	</move>
   		
-  		<copy file="${project.dist.version}/tmp/${project.name}/library.properties" tofile="${project.dist.version}/web/download/${project.name}.txt" />
+  	<copy file="${project.dist.version}/tmp/${project.name}/library.properties" tofile="${project.dist.version}/web/download/${project.name}.txt" />
 		        
+    <antcall target="macos-sign" />
+
 		<zip destfile="${project.dist.version}/${project.name}.zip"
   	       basedir="${project.dist.version}/tmp"
-  	       excludes="**/.DS_Store"
-		/>
+  	       excludes="**/.DS_Store" />
+
+		<antcall target="macos-notarize" />  	       
 		
-        <move file="${project.dist.version}/${project.name}.zip" todir="${project.dist.version}/web/download" />
+    <move file="${project.dist.version}/${project.name}.zip" todir="${project.dist.version}/web/download" />
 		
 		<copy file="${project.dist.version}/web/download/${project.name}.zip" tofile="${project.dist.version}/web/download/${project.name}-${library.version}.zip" />
 		<copy file="${project.dist.version}/web/download/${project.name}.txt" tofile="${project.dist.version}/web/download/${project.name}-${library.version}.txt" />
@@ -333,8 +402,6 @@ ${line}
 		<delete dir="${project.dist.version}/tmp" />
 	</target>
 	
-	
-	
 	<!-- parsing the examples folder -->
 	<target name="processExamples">
 		<dirset id="examples.contents" dir="${project.examples}" excludes="*/*"/>
@@ -343,8 +410,7 @@ ${line}
 		</foreach>
 	</target>
 		
-	
-    
+	  
     <target name="addExamples">
         <echo>${exampleDir}</echo>
         <propertyregex property="pde"
@@ -373,9 +439,7 @@ ${line}
                   <echo message="Data folder, attention." />
               </else>
           </if>
-    </target>   
-    
-	
+    </target>
 	
 	<target name="clean" depends="library.run">
 		<delete dir="${project.bin}"/>
